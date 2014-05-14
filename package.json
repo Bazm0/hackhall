@@ -11,7 +11,13 @@
 		"jade": "*",
 		"mongodb": "*",
 		"mongoose":"",
-		"oauth":"*"
+		"oauth":"*",
+		"morgan": "~1.0.0",
+		"body-parser": "~1.0.0",
+    "method-override": "~1.0.0",
+    "serve-favicon": "*",
+    "cookie-parser": "*",
+    "express-session": "*"
 	},
 	"devDependencies":{
 		"mocha": "",

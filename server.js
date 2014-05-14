@@ -1,40 +1,37 @@
 var express = require('express'),
-  routes = require('./routes'),
-  http = require('http'),
-  util = require('util'),
-  oauth = require('oauth'),
-  querystring = require('querystring');
+    routes = require('./routes'),
+    http = require('http'),
+    util = require('util'),
+    oauth = require('oauth'),
+    querystring = require('querystring'),
+    morgan = require('morgan'),
+    bodyParser = require('body-parser'),
+    favicon = require('serve-favicon'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    methodOverride = require('method-override');
 
 var app = express();
-app.configure(function(){
-  app.set('port', process.env.PORT || 3000  );
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('asd;lfkajs;ldfkj'));
-  app.use(express.session({
-    secret: '<h1>WHEEYEEE</h1>',
-    key: 'sid',
-    cookie: {
-      secret: true,
-      expires: false      
-    }
-  }));
-  // app.use(express.csrf());
-  // app.use(function(req, res, next) {
-    // res.locals.csrf = req.session._cstf;
-    // return next();
-  // });
-  app.use(express.static(__dirname + '/public'));
-  app.use(app.router);
-});
 
-app.configure(function() {
-  app.use(logErrors);
-  app.use(clientErrorHandler);
-  app.use(errorHandler);
-});
+app.set('port', process.env.PORT || 3000  );
+app.use(morgan('dev'));     
+app.use(bodyParser());          
+app.use(methodOverride()); 
+app.use(favicon(__dirname + '/public/img/favicon.ico'));   
+app.use(cookieParser('asd;lfkajs;ldfkj'));     
+app.use(session({
+  secret: '<h1>WHEEYEEE</h1>',
+  key: 'sid',
+  cookie: {
+    secret: true,
+    expires: false      
+  }
+})) ;
+app.use(express.static(__dirname + '/public'));
+
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 
 function logErrors(err, req, res, next) {
   console.error('logErrors', err.toString());
@@ -86,7 +83,7 @@ app.get('/auth/angellist/callback',
 
 //MAIN
 app.get('/api/profile', checkUser, db, routes.main.profile);
-app.del('/api/profile', checkUser, db, routes.main.delProfile);
+app.delete('/api/profile', checkUser, db, routes.main.delProfile);
 app.post('/api/login', db, routes.main.login);
 app.post('/api/logout', routes.main.logout);
 
@@ -95,14 +92,14 @@ app.get('/api/posts', checkUser, db, routes.posts.getPosts);
 app.post('/api/posts', checkUser, db, routes.posts.add);
 app.get('/api/posts/:id', checkUser, db, routes.posts.getPost);
 app.put('/api/posts/:id', checkUser, db, routes.posts.updatePost);
-app.del('/api/posts/:id', checkUser, db, routes.posts.del);
+app.delete('/api/posts/:id', checkUser, db, routes.posts.del);
 
 //USERS
 app.get('/api/users', checkUser, db, routes.users.getUsers);
 app.get('/api/users/:id', checkUser, db,routes.users.getUser);
 app.post('/api/users', checkAdmin, db, routes.users.add);
 app.put('/api/users/:id', checkAdmin, db, routes.users.update);
-app.del('/api/users/:id', checkAdmin, db, routes.users.del);
+app.delete('/api/users/:id', checkAdmin, db, routes.users.del);
 
 //APPLICATION 
 app.post('/api/application', checkAdmin, db, routes.application.add); 
@@ -116,7 +113,7 @@ app.get('*', function(req, res){
 http.createServer(app);
 if (require.main === module) {
   app.listen(app.get('port'), function(){
-    console.info('Express server listening on port ' + app.get('port'));
+    console.info('Express server listening on port %s', app.get('port'));
   });
 }
 else {
