@@ -16,8 +16,8 @@ suite('POSTS API', function() {
   });
   test('log in', function(done) {
     user1.post(port + '/api/login').send({
-      email: '1@1.com',
-      password: '1'
+      email: 'barquigley@gmail.com',
+      password: 'password1'
     }).end(function(res) {
       assert.equal(res.status, 200);
       done();

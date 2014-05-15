@@ -61,8 +61,8 @@ suite('Test log in', function() {
   });
   test('login', function(done) {
     user1.post('http://localhost:3000/api/login').send({
-      email: '1@1.com',
-      password: '1'
+      email: 'barquigley@gmail.com',
+      password: 'password1'
     }).end(function(res) {
       assert.equal(res.status, 200);
       done();
@@ -109,8 +109,8 @@ suite('User control', function() {
   };
   suiteSetup(function(done) {
     user1.post('http://localhost:3000/api/login').send({
-      email: '1@1.com',
-      password: '1'
+      email: 'barquigley@gmail.com',
+      password: 'password1'
     }).end(function(res) {
       assert.equal(res.status, 200);
       // done();

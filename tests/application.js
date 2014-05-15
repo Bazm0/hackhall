@@ -15,7 +15,7 @@ suite('APPLICATION API', function (){
     done();
   });
   test('log in as admin', function(done){
-    user1.post(port+'/api/login').send({email:'1@1.com',password:'1'}).end(function(res){
+    user1.post(port+'/api/login').send({email:'barquigley@gmail.com',password:'password1'}).end(function(res){
         assert.equal(res.status,200);
       done();
     });       
@@ -103,7 +103,7 @@ suite('APPLICATION API', function (){
     });
   }); 
   test('log in as admin', function(done){
-    user1.post(port+'/api/login').send({email:'1@1.com',password:'1'}).end(function(res){
+    user1.post(port+'/api/login').send({email:'barquigley@gmail.com',password:'password1'}).end(function(res){
         assert.equal(res.status,200);
       done();
     });       

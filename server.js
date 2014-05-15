@@ -17,7 +17,7 @@ app.set('port', process.env.PORT || 3000  );
 app.use(morgan('dev'));     
 app.use(bodyParser());          
 app.use(methodOverride()); 
-app.use(favicon(__dirname + '/public/img/favicon.ico'));   
+app.use(favicon(__dirname + '/public/img/favicon.png'));   
 app.use(cookieParser('asd;lfkajs;ldfkj'));     
 app.use(session({
   secret: '<h1>WHEEYEEE</h1>',
